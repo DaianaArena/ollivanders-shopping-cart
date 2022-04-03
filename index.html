@@ -67,7 +67,25 @@
         </div>
     </div>
 
+    <!-- Carrito -->
+    <div class="container my-5" id="carrito">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">PRODUCTO</th>
+            <th scope="col">CANTIDAD</th>
+            <th scope="col">PRECIO</th>
+            <th scope="col">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody id="cartContainer">
+          
 
+        </tbody>
+
+    </table>
+    </div>
     <!-- Templates -->
     <template id="template-card">
         <div class="col">
@@ -84,6 +102,20 @@
 
             </div>
         </div>
+    </template>
+
+    <template id="template-cart">
+        <tr>
+            <th scope="row" id="id"></th>
+            <td id="nombre"></td>
+            <td>
+                <button type="button" class="btn btn-danger" id="btn-minus">-</button>
+                <span></span>
+                <button type="button" class="btn btn-success" id="btn-plus">+</button>
+            </td>
+            <td id="precio"></td>
+            <td id="total"></td>
+        </tr>
     </template>
 
 <!-- Scripts -->
