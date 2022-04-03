@@ -1,5 +1,3 @@
-//1: hacer un evento click en cualquier objeto del carrito (CUIDADO PORQUE LOS TR NO SE CREAN HASTA LA FUNCION) con un if target= boton + o boton -
-
 const templateCard = document.getElementById('template-card').content;
 const varitasContainer = document.getElementById('varitasContainer');
 const fragment = document.createDocumentFragment();
@@ -8,17 +6,44 @@ const cartContainer = document.getElementById('cartContainer');
 
 let cart = {};
 
+//hacer fetch de productos luego de que carga la web
 document.addEventListener('DOMContentLoaded', () => {
   fetchProducts();
 
 });
 
+//añadir objetos al carrito al hacer click en "agregar"
 varitasContainer.addEventListener('click', (event) => {
   addToCart(event);
+
 });
 
 
 
+cartContainer.addEventListener('click', (event) => {
+
+  //restar item desde el boton -
+  if (event.target.classList.contains("btn-minus")) {
+    let id = event.target.parentElement.parentElement.getAttribute('data-id')
+    cart[id].quantity--;
+
+    //borrar item si la cantidad es 0
+    if (cart[id].quantity === 0) {
+      delete cart[id];
+    }
+    displayCart(cart)
+
+
+  } else if (event.target.classList.contains("btn-plus")) { //sumar item desde el boton +
+    let id = event.target.parentElement.parentElement.getAttribute('data-id')
+    cart[id].quantity++;
+    displayCart(cart)
+  }
+  event.stopPropagation();
+
+  });
+
+  //fetch de la api de productos
 const fetchProducts = async () => {
   try {
     const res = await fetch('https://my-json-server.typicode.com/DaianaArena/ollivanders-json/products');
@@ -32,6 +57,7 @@ const fetchProducts = async () => {
   }
 };
 
+//mostrar productos desde el dom
 function displayProducts  (products) {
   products.forEach(product => {
 
@@ -71,6 +97,7 @@ function displayProducts  (products) {
   varitasContainer.appendChild(fragment);
 }
 
+//añade al carrito solo si tocan en el boton "agregar"
 const addToCart = (event) => {
 
 
@@ -81,6 +108,7 @@ const addToCart = (event) => {
   event.stopPropagation();
 }
 
+//crea el objeto producto y lo añade al carrito
 const setCart = object => {
   const product = {
     id: object.querySelector('button').getAttribute('data-id'),
@@ -101,6 +129,7 @@ const setCart = object => {
   displayCart(cart);
 }
 
+//muestra el carrito desde el dom
 function displayCart(cart) {
 
   cartContainer.innerHTML = '';
@@ -108,6 +137,7 @@ function displayCart(cart) {
     let product = cart[key];
     templateCart.querySelector("tr").setAttribute('data-id', product.id);
     templateCart.getElementById('id').textContent = product.id;
+
     templateCart.getElementById('nombre').textContent = product.name;
     templateCart.querySelector('span').textContent = product.quantity;
     templateCart.getElementById('precio').textContent = product.price;
@@ -121,4 +151,22 @@ function displayCart(cart) {
 
 }
 
+//mostrar secciones
+function goToHome() {
+  document.getElementById('inicio').style.display = 'block';
+  document.getElementById('varitas').style.display = 'none';
+  document.getElementById('carrito').style.display = 'none';
+}
+
+function goToStore() {
+  document.getElementById('inicio').style.display = 'none';
+  document.getElementById('varitas').style.display = 'block';
+  document.getElementById('carrito').style.display = 'none';
+}
+
+function goToCart() {
+  document.getElementById('inicio').style.display = 'none';
+  document.getElementById('varitas').style.display = 'none';
+  document.getElementById('carrito').style.display = 'block';
+}
 

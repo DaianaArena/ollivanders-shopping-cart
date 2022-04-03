@@ -28,13 +28,13 @@
           <div class="collapse navbar-collapse" id="navbar-ppal">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="#inicio">Inicio</a>
+                <a class="nav-link active" href="#inicio" onclick="goToHome();">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#varitas">Varitas</a>
+                <a class="nav-link" href="#varitas" onclick="goToStore();">Varitas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#carrito">Carrito</a>
+                <a class="nav-link" href="#carrito" onclick="goToCart();">Carrito</a>
               </li>
             </ul>
 
@@ -44,7 +44,7 @@
       </nav>
 
     <!-- Hero -->
-      <div class="container my-5" id="inicio">
+    <div class="container my-5" id="inicio">
         <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
           <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
             <h1 class="display-4 fw-bold lh-1">Bienvenidos, magos!</h1>
@@ -54,10 +54,10 @@
               <img class="rounded-lg-3" src="https://blog.discoveruniversal.com/wp-content/uploads/2021/10/WandGuide3.jpg" alt="" width="720">
           </div>
         </div>
-      </div>
+    </div>
 
     <!-- Varitas -->
-    <div class="album py-5 bg-light" id="varitas">
+    <div class="album py-5 bg-light" id="varitas" style="display: none;">
         <div class="container ">
 
           <div class="row  row-cols-1 row-cols-sm-2 row-cols-md-3 g-3  " id="varitasContainer" >
@@ -68,7 +68,7 @@
     </div>
 
     <!-- Carrito -->
-    <div class="container my-5" id="carrito">
+    <div class="container my-5" id="carrito" style="display: none;">
     <table class="table table-hover">
         <thead>
           <tr>
@@ -109,9 +109,9 @@
             <th scope="row" id="id"></th>
             <td id="nombre"></td>
             <td>
-                <button type="button" class="btn btn-danger" id="btn-minus">-</button>
+                <button type="button" class="btn btn-danger btn-minus">-</button>
                 <span></span>
-                <button type="button" class="btn btn-success" id="btn-plus">+</button>
+                <button type="button" class="btn btn-success btn-plus">+</button>
             </td>
             <td id="precio"></td>
             <td id="total"></td>
