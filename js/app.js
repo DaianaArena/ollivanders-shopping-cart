@@ -1,14 +1,24 @@
+//AGREGAR FOOTER AL CARRITO Y LOCAL STORAGE
+
 const templateCard = document.getElementById('template-card').content;
 const varitasContainer = document.getElementById('varitasContainer');
 const fragment = document.createDocumentFragment();
 const templateCart = document.getElementById('template-cart').content;
 const cartContainer = document.getElementById('cartContainer');
+const footerContainer = document.getElementById('footer');
+const templateFooter = document.getElementById('template-footer').content;
 
 let cart = {};
 
 //hacer fetch de productos luego de que carga la web
 document.addEventListener('DOMContentLoaded', () => {
   fetchProducts();
+
+  //si existe un cart en local storage, lo muestra
+  if (localStorage.getItem('cart')) {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    displayCart(cart);
+  }
 
 });
 
@@ -38,10 +48,12 @@ cartContainer.addEventListener('click', (event) => {
     let id = event.target.parentElement.parentElement.getAttribute('data-id')
     cart[id].quantity++;
     displayCart(cart)
-  }
-  event.stopPropagation();
+  } 
+    event.stopPropagation();
 
   });
+
+ 
 
   //fetch de la api de productos
 const fetchProducts = async () => {
@@ -104,12 +116,14 @@ const addToCart = (event) => {
  if (event.target.classList.contains("btn-primary")) {
     setCart(event.target.parentElement);
 
+
   }
   event.stopPropagation();
 }
 
 //crea el objeto producto y lo añade al carrito
 const setCart = object => {
+
   const product = {
     id: object.querySelector('button').getAttribute('data-id'),
     name: object.querySelector('h3').textContent,
@@ -145,9 +159,49 @@ function displayCart(cart) {
 
     let addProductToCart = templateCart.cloneNode(true);
     fragment.appendChild(addProductToCart);
-    cartContainer.appendChild(fragment);
+    
   }
+  cartContainer.appendChild(fragment);
+  displayFooter(cart);
 
+  // guardar carrito en local storage
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+}
+
+
+//muestra el footer desde el dom
+function displayFooter(cart) {
+  footerContainer.innerHTML = '';
+  if (Object.keys(cart).length === 0) {
+    footerContainer.innerHTML = '<th scope="row" colspan="5">Carrito vacío - Comience a comprar!</th>';
+
+  } else {
+    let total = 0;
+    let precioFinal = 0;
+    for (let key in cart) {
+      let product = cart[key];
+      total += product.quantity
+      precioFinal += product.quantity * parseInt(product.price.substring(1), 10);
+    }
+    
+    templateFooter.getElementById('totalProductos').textContent = total;
+    templateFooter.getElementById('precioFinal').textContent = precioFinal;
+
+    const footerClone = templateFooter.cloneNode(true);
+    fragment.appendChild(footerClone);
+    footerContainer.appendChild(fragment);
+
+
+    //borrar carrito al hacer click en "vaciar carrito"
+    const vaciarCarrito = document.getElementById("vaciar-carrito")
+    vaciarCarrito.addEventListener('click', (event) => {
+      cart = {};
+      displayCart(cart);
+    });
+
+  }
+  
 
 }
 
