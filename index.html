@@ -28,13 +28,13 @@
           <div class="collapse navbar-collapse" id="navbar-ppal">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="#inicio" onclick="goToHome();">Inicio</a>
+                <a class="nav-link active" href="#inicio" onclick="goToHome();" data-toggle="collapse" data-target=".navbar-collapse">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#varitas" onclick="goToStore();">Varitas</a>
+                <a class="nav-link" href="#varitas" onclick="goToStore();" data-toggle="collapse" data-target=".navbar-collapse">Varitas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#carrito" onclick="goToCart();">Carrito</a>
+                <a class="nav-link" href="#carrito" onclick="goToCart();" data-toggle="collapse" data-target=".navbar-collapse">Carrito</a>
               </li>
             </ul>
 
@@ -85,11 +85,17 @@
         </tbody>
         <tfoot>
           <tr id="footer">
-            <th scope="row" colspan="5">Carrito vacío - Comience a comprar!</th>
+            <th scope="row" colspan="5" class="text-danger">Carrito vacío - Comience a comprar!</th>
           </tr>
         </tfoot>
     </table>
     </div>
+
+    <!-- Agregado al carrito Badge -->
+    <div class="fixed-bottom d-flex justify-content-center" >
+        <span class="badge bg-success" style="font-size: 16px; display: none; " id="addToCartBadge">Agregado al carrito</span>
+    </div>
+  
     <!-- Templates -->
     <template id="template-card">
         <div class="col">
@@ -113,7 +119,7 @@
             <th scope="row" id="id"></th>
             <td id="nombre"></td>
             <td>
-                <button type="button" class="btn btn-danger btn-minus">-</button>
+                <button type="button" class="btn btn-danger  btn-minus">-</button>
                 <span></span>
                 <button type="button" class="btn btn-success btn-plus">+</button>
             </td>
@@ -124,13 +130,13 @@
 
     <template id="template-footer">
       <th scope="row" colspan="2">TOTAL PRODUCTOS</th>
-      <td id="totalProductos">10</td>
+      <td id="totalProductos" style="text-align: center; ">10</td>
       <td>
           <button class="btn btn-danger btn-sm" id="vaciar-carrito">
-              vaciar todo
+             VACIAR
           </button>
       </td>
-      <td class="font-weight-bold">$ <span id="precioFinal">5000</span></td>
+      <td class="font-weight-bold" style="font-size: 0.75em;">$ <span id="precioFinal">5000</span></td>
     </template>
 
 <!-- Scripts -->

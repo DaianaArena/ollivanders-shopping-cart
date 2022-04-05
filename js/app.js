@@ -1,5 +1,3 @@
-//AGREGAR FOOTER AL CARRITO Y LOCAL STORAGE
-
 const templateCard = document.getElementById('template-card').content;
 const varitasContainer = document.getElementById('varitasContainer');
 const fragment = document.createDocumentFragment();
@@ -7,6 +5,8 @@ const templateCart = document.getElementById('template-cart').content;
 const cartContainer = document.getElementById('cartContainer');
 const footerContainer = document.getElementById('footer');
 const templateFooter = document.getElementById('template-footer').content;
+const addToCartBadge =document.getElementById('addToCartBadge');
+const navLinks = document.querySelectorAll('.nav-link');
 
 let cart = {};
 
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //añadir objetos al carrito al hacer click en "agregar"
 varitasContainer.addEventListener('click', (event) => {
   addToCart(event);
+  
 
 });
 
@@ -116,6 +117,12 @@ const addToCart = (event) => {
  if (event.target.classList.contains("btn-primary")) {
     setCart(event.target.parentElement);
 
+    //mensaje de agregado al carrito
+
+    addToCartBadge.style.display = 'block';
+    setTimeout(function(){
+      addToCartBadge.style.display = 'none';
+    }, 1000);
 
   }
   event.stopPropagation();
@@ -174,7 +181,7 @@ function displayCart(cart) {
 function displayFooter(cart) {
   footerContainer.innerHTML = '';
   if (Object.keys(cart).length === 0) {
-    footerContainer.innerHTML = '<th scope="row" colspan="5">Carrito vacío - Comience a comprar!</th>';
+    footerContainer.innerHTML = '<th scope="row" colspan="5" class="text-danger">Carrito vacío - Comience a comprar!</th>';
 
   } else {
     let total = 0;
@@ -224,3 +231,4 @@ function goToCart() {
   document.getElementById('carrito').style.display = 'block';
 }
 
+//cerrar menu al hacer click en un link
